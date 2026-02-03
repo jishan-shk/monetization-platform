@@ -15,4 +15,7 @@ if (!defined('SCRIPT_VERSION')) {
     define("UNAUTHORIZED_ERROR_MSG", 'Unauthorized Access');
     define("VALIDATION_ERROR_MSG", 'Validation Error');
     define('TOO_MANY_ATTEMPT_MESSAGE', "429 Too Many Requests.");
+
+    define('ROLE_ADMIN', 'admin');
+    define('ROLE_DEVELOPER', 'developer');
 }

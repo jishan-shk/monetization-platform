@@ -8,7 +8,7 @@ This project implements a **Laravel 12 API** with features including:
 - Billing and subscription tiers
 - Audit-ready request logs
 - Scheduler & queue workers for async tasks (cache clear and billing)
-
+- Admin role wise billing summary
 ---
 
 ## **Setup Instructions**
@@ -68,18 +68,23 @@ Dummy Login :
 Otp - 123456
 1. Free Tier : 
     name - Free User
-    email - free@example.com
+    email - free@gmail.com
     api-key - API_KEY_FREE
     password - password
 
 2. Standard Tier : 
     name - Standard User
-    email - standard@example.com
+    email - standard@gmail.com
     api-key - API_KEY_STANDARD
     password - password
 
 3. Premium Tier : 
     name - Premium User
-    email - premium@example.com
+    email - premium@gmail.com
     api-key - API_KEY_PREMIUM
+    password - password
+
+4. Admin User : 
+    name - Admin User
+    email - admin@gmail.com
     password - password

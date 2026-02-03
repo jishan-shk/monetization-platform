@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\AdminAccessMiddleware;
 use App\Http\Middleware\ApiRateLimiter;
 use App\Http\Middleware\TrackApiUsage;
 use Illuminate\Foundation\Application;
@@ -17,6 +18,7 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->alias([
             'api.tier_rate_limiter' => ApiRateLimiter::class,
+            'api.admin_access'      => AdminAccessMiddleware::class,
         ]);
 
         $middleware->appendToGroup('api', TrackApiUsage::class);

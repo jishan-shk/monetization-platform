@@ -12,7 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->foreignId('subscription_tier_id')->after('api_key')->constrained();
+            $table->foreignId('subscription_tier_id')->nullable()->after('api_key')->constrained();
+            $table->enum('role', [ROLE_ADMIN, ROLE_DEVELOPER])->default(ROLE_DEVELOPER)->after('api_key');
         });
     }
 
@@ -24,6 +25,7 @@ return new class extends Migration
         Schema::table('users', function (Blueprint $table) {
             $table->dropForeign(['subscription_tier_id']);
             $table->dropColumn('subscription_tier_id');
+            $table->dropColumn('role');
         });
     }
 };

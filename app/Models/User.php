@@ -58,4 +58,10 @@ class User extends Authenticatable
     {
         return $this->hasMany(ApiUsageModel::class); 
     }
+
+    public function billings()
+    {
+        return $this->hasMany(BillingModel::class, 'user_id');
+    }
+
 }

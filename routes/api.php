@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\BillingSummaryController;
 use App\Http\Controllers\SubscriptionTierController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -23,4 +24,6 @@ Route::middleware('auth:sanctum')->group(function () {
             'data' => 'Sample protected Api'
         ]);
     })->middleware(['api.tier_rate_limiter']);
+
+    Route::get('billing-summary', [BillingSummaryController::class, 'billing_summary'])->middleware(['api.admin_access']);
 });

@@ -15,16 +15,25 @@ class UserDataSeeder extends Seeder
      */
     public function run(): void
     {
+        User::firstOrCreate(
+            ['email' => 'admin@gmail.com'],
+            [
+                'name' => 'Admin User',
+                'password' => 'password',
+                'role' => 'admin',
+            ]
+        );
+
         $tiers = SubscriptionTiersModel::all();
 
         foreach ($tiers as $tier) {
             User::updateOrCreate(
                 [
-                    'email' => "{$tier->name}@example.com",
+                    'email' => "{$tier->name}@gmail.com",
                 ],
                 [
                     'name' => ucfirst($tier->name) . ' User',
-                    'password' => Hash::make('password'),
+                    'password' => 'password',
                     'subscription_tier_id' => $tier->id,
                     'api_key' => 'API_KEY_' . strtoupper($tier->name),
                 ]
