@@ -28,20 +28,19 @@ class ApiRateLimiter
         
         if(!$this->usageService->verifyApiKey($user,$request)){
             return response()->json([
-                'error' => 'Unauthorized Access.' 
-            ], 401);
+                'error' => UNAUTHORIZED_ERROR_MSG 
+            ], UNAUTHORIZED_ACCESS_CODE);
         }
         
         if ($this->usageService->hasExceededLimit($user)) {
-            $this->usageService->save_api_log($user, $request, 429);
-
+            $this->usageService->save_api_log($user, $request, TOO_MANY_ATTEMPT_CODE);
             return response()->json([
-                'error' => '429 Too Many Requests.' 
-            ], 429);
+                'error' => TOO_MANY_ATTEMPT_MESSAGE 
+            ], TOO_MANY_ATTEMPT_CODE);
         }
 
         $this->usageService->incrementUsage($user);
-        $this->usageService->save_api_log($user, $request, 200);
+        $this->usageService->save_api_log($user, $request, SUCCESS_REQUEST_CODE);
         
         return $next($request);
     }

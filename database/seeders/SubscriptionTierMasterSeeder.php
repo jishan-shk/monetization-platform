@@ -14,8 +14,8 @@ class SubscriptionTierMasterSeeder extends Seeder
     public function run(): void
     {
         SubscriptionTiersModel::insert([
-            ['name' => 'free', 'daily_limit' => 100],
-            ['name' => 'standard', 'daily_limit' => 1000],
+            ['name' => 'free', 'daily_limit' => 100 , 'extra_call_rate' => 0],
+            ['name' => 'standard', 'daily_limit' => 1000, 'extra_call_rate' => 0],
             ['name' => 'premium', 'daily_limit' => 10000, 'extra_call_rate' => 0.01],
         ]);
     }
