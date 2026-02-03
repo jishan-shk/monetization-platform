@@ -34,6 +34,10 @@ class ProcessMonthlyBilling implements ShouldQueue
             $billingData = [];
 
             $premiumUsers = User::whereHas('tier', fn($q) => $q->where('name', 'premium'))
+                ->whereHas('api_usage', function ($query) use ($lastMonth) {
+                    $query->whereYear('date', $lastMonth->year)
+                        ->whereMonth('date', $lastMonth->month);
+                })
                 ->withSum(['api_usage as extra_calls' => function ($query) use ($lastMonth) {
                     $query->whereYear('date', $lastMonth->year)
                         ->whereMonth('date', $lastMonth->month);
@@ -44,18 +48,16 @@ class ProcessMonthlyBilling implements ShouldQueue
             foreach ($premiumUsers as $user) {
                 $extra_calls = $user->extra_calls ?? 0;
             
-                $billingData[] = [
+                $billingData = [
                     'user_id'       => $user->id,
                     'extra_calls'   => $extra_calls,
                     'amount'        => $extra_calls * 0.01,
-                    'billing_month' => $lastMonth->startOfMonth()->toDateString(),
-                    'created_at'    => now(),
-                    'updated_at'    => now(),
                 ];
-            }
 
-            if (!empty($billingData)) {
-                BillingModel::insert($billingData);
+                BillingModel::updateOrCreate([
+                    'user_id'       => $user->id,
+                    'billing_month' => $lastMonth->startOfMonth()->toDateString(),
+                ], $billingData);
             }
 
             DB::commit();
@@ -63,7 +65,5 @@ class ProcessMonthlyBilling implements ShouldQueue
             DB::rollBack();
             Log::error('Error processing monthly billing: ' . $e->getMessage());
         }
-
-
     }
 }

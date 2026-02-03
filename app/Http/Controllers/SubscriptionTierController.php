@@ -33,7 +33,7 @@ class SubscriptionTierController extends Controller
             'data'   => [
                 'total_available' => $total_limit,
                 'current_usage'   => $current_usage,
-                'available_usage' => $total_limit - $current_usage
+                'available_usage' => max(0, $total_limit - $current_usage)
             ]
         ]);
     }

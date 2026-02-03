@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('api_usage', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained();
+            $table->text('request_path');
             $table->date('date');
             $table->integer('count')->default(0);
             $table->timestamps();

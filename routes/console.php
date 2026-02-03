@@ -14,4 +14,7 @@ Schedule::call(function () {
     Cache::flush();
 })->daily();
 
-Schedule::job(new ProcessMonthlyBilling)->monthly();
+Schedule::command('billing:process-monthly')
+    ->monthly()
+    ->withoutOverlapping()
+    ->onOneServer();
