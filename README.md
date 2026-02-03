@@ -9,6 +9,7 @@ This project implements a **Laravel 12 API** with features including:
 - Audit-ready request logs
 - Scheduler & queue workers for async tasks (cache clear and billing)
 - Admin role wise billing summary
+
 ---
 
 ## **Setup Instructions**
@@ -63,28 +64,32 @@ Scheduler & Queue Worker :
     specific queue : php artisan queue:work --queue=billing
     restart queue : php artisan queue:restart
 
+
 Dummy Login : 
 
-Otp - 123456
-1. Free Tier : 
-    name - Free User
-    email - free@gmail.com
-    api-key - API_KEY_FREE
-    password - password
+    Otp - 123456
 
-2. Standard Tier : 
-    name - Standard User
-    email - standard@gmail.com
-    api-key - API_KEY_STANDARD
-    password - password
+    1. Free Tier : 
+        name - Free User
+        email - free@gmail.com
+        api-key - API_KEY_FREE
+        password - password
 
-3. Premium Tier : 
-    name - Premium User
-    email - premium@gmail.com
-    api-key - API_KEY_PREMIUM
-    password - password
+    2. Standard Tier : 
+        name - Standard User
+        email - standard@gmail.com
+        api-key - API_KEY_STANDARD
+        password - password
 
-4. Admin User : 
-    name - Admin User
-    email - admin@gmail.com
-    password - password
+    3. Premium Tier : 
+        name - Premium User
+        email - premium@gmail.com
+        api-key - API_KEY_PREMIUM
+        password - password
+
+    4. Admin User : 
+        name - Admin User
+        email - admin@gmail.com
+        password - password
+
+Postman Collection Attached - in code

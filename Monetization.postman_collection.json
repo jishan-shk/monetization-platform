@@ -1,0 +1,274 @@
+{
+  "info": {
+    "_postman_id": "98750117-a5d0-4cfa-b00d-c7f245d4e7ae",
+    "name": "Monetization",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "27138833"
+  },
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"email\": \"admin@gmail.com\",\n    \"otp\": \"123456\"\n  }",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{host-url}}api/login",
+              "host": [
+                "{{host-url}}api"
+              ],
+              "path": [
+                "login"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Generate Otp",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"email\": \"admin@gmail.com\"\n  }",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{host-url}}api/generate-email-otp",
+              "host": [
+                "{{host-url}}api"
+              ],
+              "path": [
+                "generate-email-otp"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Register",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"name\": \"Jishan Shaikh\",\n    \"email\": \"jishan@gmail.com\",\n    \"password\": \"admin123\",\n    \"password_confirmation\": \"admin123\",\n    \"subscription_tier\": \"free\",\n    \"otp\": \"123456\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{host-url}}api/register",
+              "host": [
+                "{{host-url}}api"
+              ],
+              "path": [
+                "register"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Subscription tier list",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{host-url}}api/subscription-tier-list",
+          "host": [
+            "{{host-url}}api"
+          ],
+          "path": [
+            "subscription-tier-list"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Sample Protected",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "1|AmOlxZqykp1pzhii3Btm7RdUXb4c1Z6dsaRq2hEO68c5e208",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [
+          {
+            "key": "x-api-key",
+            "value": "{{api-key}}",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{host-url}}api/data",
+          "host": [
+            "{{host-url}}api"
+          ],
+          "path": [
+            "data"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Current Usage",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "1|AmOlxZqykp1pzhii3Btm7RdUXb4c1Z6dsaRq2hEO68c5e208",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [
+          {
+            "key": "x-api-key",
+            "value": "{{api-key}}",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{host-url}}api/current-usage",
+          "host": [
+            "{{host-url}}api"
+          ],
+          "path": [
+            "current-usage"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "user wise billing summary",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "2|Kpk6bIUoh5PNWlh9M93EeJBwS9Oj8eyVLcLQYAax187d2463",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{host-url}}api/billing-summary?user_id=1&billing_month=2026-01",
+          "host": [
+            "{{host-url}}api"
+          ],
+          "path": [
+            "billing-summary"
+          ],
+          "query": [
+            {
+              "key": "user_id",
+              "value": "1"
+            },
+            {
+              "key": "billing_month",
+              "value": "2026-01"
+            }
+          ]
+        }
+      },
+      "response": []
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "host-url",
+      "value": "http://monetization-platform.test/"
+    },
+    {
+      "key": "api-key",
+      "value": "6508d841691c0977f4cd8905c4af34f482ce9055b426174e7b4f18b63f85267f"
+    }
+  ]
+}
