@@ -19,15 +19,6 @@ class DatabaseSeeder extends Seeder
         // User::factory(10)->create();
 
         $this->call(SubscriptionTierMasterSeeder::class);
-        
-        $premuimTier = SubscriptionTiersModel::where('name', 'premium')->value('id');
-        User::firstOrCreate([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-        ],[
-            'password' => bcrypt('password'),
-            'subscription_tier_id' => $premuimTier,
-            'api_key' => bin2hex(random_bytes(16)),
-        ]);
+        $this->call(UserDataSeeder::class);
     }
 }

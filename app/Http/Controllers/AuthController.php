@@ -23,7 +23,7 @@ class AuthController extends Controller
     {
         try {
             $validated = $request->validate([
-                'email' => ['required', 'email', 'max:255', 'unique:users,email']
+                'email' => ['required', 'email', 'max:255']
             ]);
 
             $email = $validated['email'];

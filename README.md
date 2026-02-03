@@ -1,60 +1,85 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# API Usage Tracking & Billing Project
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+This project implements a **Laravel 12 API** with features including:
 
-## About Laravel
+- User registration and authentication (API token-based - Sanctum)
+- Per-user **API usage tracking** (daily/monthly)
+- Rate-limiting per plan
+- Billing and subscription tiers
+- Audit-ready request logs
+- Scheduler & queue workers for async tasks (cache clear and billing)
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+---
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## **Setup Instructions**
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+1. Clone the repo :
+git clone <repo_url>
+cd <repo_name>
 
-## Learning Laravel
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+2. Copy environment file
+    cp .env.example .env
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+3. Copy environment file
+    cp .env.example .env
 
-## Laravel Sponsors
+4. Install dependencies
+    composer install
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+5. Generate app key
+    php artisan key:generate
 
-### Premium Partners
+6. Run migrations & seeders
+    php artisan migrate --seed
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+7. Run the application
+    php artisan serve
 
-## Contributing
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Approach to Rate-Limiting & Billing : 
 
-## Code of Conduct
+1. Rate-Limiting
+    Implemented RateLimiter and per-user subscription plan.
+    Example: Free users get 100 requests/day, Premium users get 1000 requests/day and after request charges are calcualted.
+    Blocked requests are logged and return 429 Too Many Requests.
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+2. Billing
+    Each user has a subscription tier.
+    API usage is tracked daily and monthly in api usage.
+    Extra calls beyond the plan are logged for billing reports.
+    Supports multiple subscription tiers: Free, Standard, Premium.
 
-## Security Vulnerabilities
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+Scheduler & Queue Worker : 
+1. Scheduler
+    Laravel scheduler handles: Monthly usage aggregation and Daily Cache Flush
 
-## License
+    Run the scheduler : 
+        php artisan schedule:work
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
-"# monetization-platform" 
+2. Queue Worker : Helps running the task in background.
+    php artisan queue:work
+    specific queue : php artisan queue:work --queue=billing
+    restart queue : php artisan queue:restart
+
+Dummy Login : 
+
+Otp - 123456
+1. Free Tier : 
+    name - Free User
+    email - free@example.com
+    api-key - API_KEY_FREE
+    password - password
+
+2. Standard Tier : 
+    name - Standard User
+    email - standard@example.com
+    api-key - API_KEY_STANDARD
+    password - password
+
+3. Premium Tier : 
+    name - Premium User
+    email - premium@example.com
+    api-key - API_KEY_PREMIUM
+    password - password
