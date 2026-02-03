@@ -22,7 +22,7 @@ class ApiRateLimiter
         $this->usageService = $usageService;
     }
 
-    public function handle($request, Closure $next,UsageService $usageService)
+    public function handle($request, Closure $next)
     {
         $user = $request->user();
         
@@ -31,7 +31,6 @@ class ApiRateLimiter
                 'error' => UNAUTHORIZED_ERROR_MSG 
             ], UNAUTHORIZED_ACCESS_CODE);
         }
-        
         if ($this->usageService->hasExceededLimit($user)) {
             $this->usageService->save_api_log($user, $request, TOO_MANY_ATTEMPT_CODE);
             return response()->json([

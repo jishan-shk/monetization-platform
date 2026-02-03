@@ -18,10 +18,20 @@ class UsageService
         return "usage:{$user->id}:" . now()->format('Y-m-d');
     }
 
+    public function getCurrentUsage(User $user)
+    {
+        return Cache::get($this->getUsageKey($user), 0);
+    }
+
     public function incrementUsage(User $user)
     {
         $key = $this->getUsageKey($user);
-        Cache::increment($key);
+
+        if (!Cache::has($key)) {
+            Cache::put($key, 1, now()->endOfDay());
+        } else {
+            Cache::increment($key);
+        }
     }
 
     public function hasExceededLimit(User $user): bool
