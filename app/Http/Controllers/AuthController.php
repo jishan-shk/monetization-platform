@@ -56,8 +56,11 @@ class AuthController extends Controller
             } else {
                 EmailOtpModel::where('email', $email)->delete();
 
-                // $otp = rand(100000, 999999);
-                $otp = 123456;
+                if(env('APP_ENV') == 'prod'){
+                    $otp = rand(100000, 999999);
+                } else {
+                    $otp = 123456;
+                }
                 
                 EmailOtpModel::create([
                     'email'      => $email,
