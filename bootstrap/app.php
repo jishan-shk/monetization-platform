@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Middleware\ApiRateLimiter;
+use App\Http\Middleware\TrackApiUsage;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -17,6 +18,8 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'api.tier_rate_limiter' => ApiRateLimiter::class,
         ]);
+
+        $middleware->appendToGroup('api', TrackApiUsage::class);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         $exceptions->shouldRenderJsonWhen(function (Request $request, Throwable $e) {

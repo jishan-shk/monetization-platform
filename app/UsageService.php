@@ -63,14 +63,6 @@ class UsageService
         return false;
     }
 
-    public function save_api_log(User $user, $request,$status_code) {
-          ApiLogModel::create([
-            'user_id' => $user->id,
-            'endpoint' => $request->path(),
-            'status_code' => $status_code
-        ]);
-    }
-
     public function verifyApiKey(User $user,$request)
     {
         return $user->api_key == $request->header('X-API-KEY');

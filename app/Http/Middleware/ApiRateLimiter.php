@@ -32,14 +32,12 @@ class ApiRateLimiter
             ], UNAUTHORIZED_ACCESS_CODE);
         }
         if ($this->usageService->hasExceededLimit($user)) {
-            $this->usageService->save_api_log($user, $request, TOO_MANY_ATTEMPT_CODE);
             return response()->json([
                 'error' => TOO_MANY_ATTEMPT_MESSAGE 
             ], TOO_MANY_ATTEMPT_CODE);
         }
 
         $this->usageService->incrementUsage($user);
-        $this->usageService->save_api_log($user, $request, SUCCESS_REQUEST_CODE);
         
         return $next($request);
     }

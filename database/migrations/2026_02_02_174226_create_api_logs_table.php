@@ -13,9 +13,12 @@ return new class extends Migration
     {
         Schema::create('api_logs', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained();
+            $table->foreignId('user_id')->nullable()->constrained();
             $table->text('endpoint');
+            $table->string('method', 10);
             $table->integer('status_code');
+            $table->integer('response_time_ms')->nullable();
+            $table->timestamp('requested_at');
             $table->timestamps();
         });
     }
